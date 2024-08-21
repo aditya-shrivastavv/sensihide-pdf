@@ -1,7 +1,7 @@
 import fitz
 import re
 import random
-from os import path, makedirs
+import os
 
 PHONE_NUMBER_REGEX = r"\b\d[\d\s]{4,15}\b"
 
@@ -48,9 +48,9 @@ class SensihidePDF:
         return True, sensitive_founds
 
     def generate_cleaned_file(self, sensitive_info, output_path):
-        output_dir = path.dirname(output_path)
-        if not path.exists(output_dir):
-            makedirs(output_dir)
+        output_dir = os.path.dirname(output_path)
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
         for page_num in range(len(self.pdf_document)):
             page = self.pdf_document[page_num]
@@ -69,18 +69,21 @@ class SensihidePDF:
         self.pdf_document.save(output_path)
 
 
-fileObj = SensihidePDF("./resume.pdf")
-pdf_text = fileObj.extract_text_from_pdf()
-containes_sensitive_data, sensitive_info = fileObj.find_sensitive_info(
-    pdf_text)
+all_pdfs = os.listdir("./input")
 
-if not containes_sensitive_data:
-    print("No sensitive data found in the pdf")
-    exit(0)
+for pdf in all_pdfs:
+    fileObj = SensihidePDF(pdf)
+    pdf_text = fileObj.extract_text_from_pdf()
+    containes_sensitive_data, sensitive_info = fileObj.find_sensitive_info(
+        pdf_text)
 
-input_file_name = path.splitext(path.basename(fileObj.pdf_path))[0]
-output_file_path = f"./out/{input_file_name}-{
-    str(random.randint(10000, 99999))}.pdf"
-fileObj.generate_cleaned_file(sensitive_info, output_file_path)
-print("Sensitive data has been removed from the pdf")
-print(f"Output file path: {output_file_path}")
+    if not containes_sensitive_data:
+        print("No sensitive data found in the pdf")
+        exit(0)
+
+    input_file_name = os.path.splitext(os.path.basename(fileObj.pdf_path))[0]
+    output_file_path = f"./out/{input_file_name}-{
+        str(random.randint(10000, 99999))}.pdf"
+    fileObj.generate_cleaned_file(sensitive_info, output_file_path)
+    print("Sensitive data has been removed from the pdf")
+    print(f"Output file path: {output_file_path}")
