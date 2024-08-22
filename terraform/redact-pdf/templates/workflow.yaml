@@ -1,0 +1,59 @@
+main:
+    params: [event]
+    steps:
+        - 1. Workflow configuration:
+            steps:
+                - Validate-inputs:
+                    switch:
+                        -
+                            condition: '$${not(text.match_regex(event.data.name, ".*\\.pdf"))}'
+                            raise:
+                                code: 400
+                                message: 'Invalid file format. Only PDF files are supported.'
+                - Get-timestamp:
+                    call: sys.now
+                    result: timestamp
+                - Configure-workflow:
+                    assign:
+                        - config:
+                            buffer_bucket: "${buffer_bucket}"
+                            output_bucket: "${output_bucket}"
+                            input_bucket: $${event.data.bucket}
+                            input_file: $${event.data.name}
+                            project_id: $${sys.get_env("GOOGLE_CLOUD_PROJECT_ID")}
+                            workflow_id: $${sys.get_env("GOOGLE_CLOUD_WORKFLOW_EXECUTION_ID")}
+                            dlp_template: ${dlp_template}
+                            finding_labels:
+                                timestamp: $${timestamp}
+                                job: $${sys.get_env("GOOGLE_CLOUD_WORKFLOW_ID")}
+                                job_id: $${sys.get_env("GOOGLE_CLOUD_WORKFLOW_EXECUTION_ID")}
+                                document: $${"gs://" + event.data.bucket + "/" + event.data.name}
+                        - status: {}
+        - 2. Extract text from PDF:
+            call: http.post
+            args:
+                url: "${pdf_to_text_url}"
+                auth:
+                    type: OIDC
+                headers:
+                    "Content-Type": "application/json"
+                body:
+                    input_file: $${config.input_file}
+                    input_file_bucket: $${config.input_bucket}
+                    buffer_bucket: $${config.buffer_bucket}
+                result: text_filename
+        - 3. Run DLP on extracted text:
+            call: http.post
+            args:
+                url: "${dlp_runner_url}"
+                auth:
+                    type: OIDC
+                body:
+                    input_file: $${text_filename.body}
+                    input_file_bucket: $${config.buffer_bucket}
+                    dlp_template: $${config.dlp_template}
+                    project_id: $${config.project_id}
+                    finding_labels: $${config.finding_labels}
+                result: dlp_result
+        - 4. Apply redaction to PDF:
+            call: http.post
