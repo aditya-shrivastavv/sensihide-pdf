@@ -6,7 +6,7 @@ resource "google_storage_bucket" "pdf_input_bucket" {
 }
 
 resource "google_storage_bucket" "buffer_bucket" {
-  name                        = "pdf-buffer-bucket${local.app_suffix}"
+  name                        = "buffer-bucket${local.app_suffix}"
   location                    = var.region
   uniform_bucket_level_access = true
   force_destroy               = true

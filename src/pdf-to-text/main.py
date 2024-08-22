@@ -15,16 +15,16 @@ def post_handler():
 
     input_file = req["input_file"]
     input_file_bucket = req["input_file_bucket"]
-    output_bucket = req["output_bucket"]
-    output_folder = req["output_folder"]
+    buffer_bucket = req["buffer_file_bucket"]
 
+    text_data = ""
     try:
         text_data = extract_text_from_pdf(input_file_bucket, input_file)
     except Exception as e:
         return {"error": f"Error extracting text from PDF: {str(e)}"}, 500
 
     try:
-        save_text_to_bucket(text_data, output_bucket, output_folder)
+        save_text_to_bucket(text_data, buffer_bucket)
     except Exception as e:
         return {"error": f"Error saving text to bucket: {str(e)}"}, 500
 
@@ -40,45 +40,45 @@ def remove_temp_files(*files):
         os.remove(file)
 
 
-def extract_text_from_pdf(input_bucket, input_file):
-    print(f"Downloading file: gs://{input_bucket}/{input_file}")
+def extract_text_from_pdf(input_file_bucket, input_file):
+    print(f"Downloading file: gs://{input_file_bucket}/{input_file}")
 
-    in_bucket = storage_client.get_bucket(input_bucket)
-    blob = in_bucket.get_blob(input_file)
-    downloaded_filename = str(uuid.uuid4())
-    blob.download_to_filename(downloaded_filename)
+    input_bucket_client = storage_client.get_bucket(input_file_bucket)
+    blob = input_bucket_client.get_blob(input_file)
+    
+    download_input_filename = str(uuid.uuid4())
+    blob.download_to_filename(download_input_filename)
 
-    print(f"Input file downloaded from bucket to: {downloaded_filename}")
+    print(f"Input file downloaded from bucket to: {download_input_filename}")
 
-    pdf_document = fitz.open(downloaded_filename)
+    pdf_document = fitz.open(download_input_filename)
     pdf_text = ""
     for page_num in range(len(pdf_document)):
         pdf_text += pdf_document[page_num].get_text()
 
     # Clean up the temporary files
-    remove_temp_files(downloaded_filename)
+    remove_temp_files(download_input_filename)
 
     return pdf_text
 
 
-def save_text_to_bucket(text_data, output_bucket, output_folder):
+def save_text_to_bucket(text_data, buffer_bucket):
     # Save `pdf_text` to a temporary file
-    text_filename = f"/tmp/{str(uuid.uuid4())}.txt"
-    with open(text_filename, "w") as text_file:
+    text_filepath = f"/tmp/{str(uuid.uuid4())}.txt"
+    with open(text_filepath, "w") as text_file:
         text_file.write(text_data)
 
-    print(f"Extracted text saved to: {text_filename}")
+    print(f"Extracted text saved to: {text_filepath}")
 
-    # Upload the temporary file to the output bucket
-    out_bucket = storage_client.get_bucket(output_bucket)
-    uploaded_filename = f"{output_folder}/{text_filename}"
-    blob = out_bucket.blob(uploaded_filename)
-    blob.upload_from_filename(text_filename)
+    # Upload the temporary file to the buffer bucket
+    buffer_bucket_client = storage_client.get_bucket(buffer_bucket)
+    blob = buffer_bucket_client.blob(text_filepath)
+    blob.upload_from_filename(text_filepath)
 
-    print(f"Text file uploaded to: gs://{output_bucket}/{uploaded_filename}")
+    print(f"Text file uploaded to: gs://{buffer_bucket}/{text_filepath}")
 
     # Clean up the temporary files
-    remove_temp_files(text_filename)
+    remove_temp_files(text_filepath)
 
 
 if __name__ == "__main__":
