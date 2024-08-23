@@ -48,7 +48,7 @@ main:
                 auth:
                     type: OIDC
                 body:
-                    text_data: $${text_data}
+                    text_data: $${text_data.body}
                     dlp_template: $${config.dlp_template}
                     project_id: $${config.project_id}
             result: dlp_result
@@ -56,3 +56,7 @@ main:
             call: http.post
             args:
                 url: "${findings_writer_url}"
+                auth:
+                    type: OIDC
+                body:
+                    findings: $${dlp_result.body}

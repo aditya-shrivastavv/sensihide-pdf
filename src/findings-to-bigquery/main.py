@@ -1,4 +1,3 @@
-import json
 import os
 
 from flask import Flask, request, jsonify
@@ -23,3 +22,8 @@ bq_client = bigquery.Client()
 def post_handler():
     req = request.get_json()
     print(req)
+
+    findings = req["findings"]
+    print("findings: ", findings)
+
+    return jsonify({"status": "ok"})
