@@ -13,7 +13,7 @@ def post_handler():
     dlp_template = req["dlp_template"]
     project_id = req["project_id"]
 
-    print("Sending text to DLP API")
+    print("Sending text to DLP API.")
     try:
         findings = run_dlp_on_text(text_data, dlp_template, project_id)
         return jsonify(findings)
