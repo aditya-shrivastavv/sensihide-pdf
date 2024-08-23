@@ -41,6 +41,8 @@ def extract_text_from_pdf(input_file_bucket, input_file):
     for page_num in range(len(pdf_document)):
         pdf_text += pdf_document[page_num].get_text()
 
+    print(f"Successfully extracted text from PDF: {
+          pdf_text.split("\n")[0]}...")
     # Clean up the temporary files
     os.remove(download_input_filename)
 
