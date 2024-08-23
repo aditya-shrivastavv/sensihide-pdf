@@ -1,4 +1,4 @@
-name: Build and Push (PDF to Text)
+name: Build and Push (DLP Runner)
 on:
     workflow_dispatch:
     push:
