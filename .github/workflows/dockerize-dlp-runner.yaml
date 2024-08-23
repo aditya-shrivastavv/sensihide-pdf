@@ -1,6 +1,11 @@
 name: Build and Push (DLP Runner)
 on:
     workflow_dispatch:
+        inputs:
+            image-tag:
+                description: 'Image tag'
+                required: true
+                default: 'latest'
     push:
         branches:
             - master
@@ -24,5 +29,5 @@ jobs:
                 uses: docker/build-push-action@v6
                 with:
                     context: ./src/dlp-runner
-                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/sensihidepdf-dlp-runner:latest
+                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/sensihidepdf-dlp-runner:${{ github.event.inputs.image-tag }}
                     push: true
