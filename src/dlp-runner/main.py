@@ -1,3 +1,4 @@
+import json
 from flask import Flask, request, jsonify
 import google.cloud.dlp
 
@@ -37,4 +38,4 @@ def run_dlp_on_text(text_data, dlp_template, project_id):
         }
     )
     print("DLP API response received: ", dlp_response.result)
-    return dlp_response.result
+    return json.dumps(dlp_response.result)
