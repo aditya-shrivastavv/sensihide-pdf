@@ -1,7 +1,7 @@
 import fitz
 import os
 import uuid
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from google.cloud import storage
 
 app = Flask(__name__)
@@ -44,7 +44,7 @@ def extract_text_from_pdf(input_file_bucket, input_file):
     # Clean up the temporary files
     os.remove(download_input_filename)
 
-    return pdf_text
+    return jsonify(pdf_text)
 
 
 if __name__ == "__main__":
