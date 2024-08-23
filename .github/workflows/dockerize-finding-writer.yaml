@@ -1,0 +1,28 @@
+name: Build and Push (Findings writer)
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - master
+        paths:
+            - "src/findings-to-bigquery/**"
+jobs:
+    build-push:
+        runs-on: ubuntu-latest
+        steps:
+            -
+                name: Checkout code
+                uses: actions/checkout@v4
+            -   
+                name: Login to Docker Hub
+                uses: docker/login-action@v3
+                with:
+                    username: ${{ secrets.DOCKERHUB_USERNAME }}
+                    password: ${{ secrets.DOCKERHUB_TOKEN }}
+            -
+                name: Build and Push
+                uses: docker/build-push-action@v6
+                with:
+                    context: ./src/findings-to-bigquery
+                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/sensihidepdf-findings-writer:latest
+                    push: true
