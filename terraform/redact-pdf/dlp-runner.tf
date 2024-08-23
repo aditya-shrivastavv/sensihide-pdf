@@ -23,7 +23,7 @@ resource "google_cloud_run_v2_service" "dlp_runner" {
 
   template {
     containers {
-      image = "Image"
+      image = var.image_dlp_runner
     }
     service_account = google_service_account.dlp_runner.email
   }

@@ -16,7 +16,7 @@ resource "google_cloud_run_v2_service" "findings_writer" {
 
   template {
     containers {
-      image = "Image"
+      image = var.image_findings_writer
       env {
         name  = "BQ_DATASET"
         value = google_bigquery_dataset.pdf_redaction.dataset_id

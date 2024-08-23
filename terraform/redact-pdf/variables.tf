@@ -21,3 +21,15 @@ variable "image_pdf_to_text" {
   description = "Image for the PDF to text service"
   type        = string
 }
+
+variable "image_dlp_runner" {
+  default = "adityadocs/sensihidepdf-dlp-runner"
+  description = "Image for the DLP runner service"
+  type        = string
+}
+
+variable "image_findings_writer" {
+  default = "adityadocs/sensihidepdf-findings-writer"
+  description = "Image for the findings writer service"
+  type        = string
+}
