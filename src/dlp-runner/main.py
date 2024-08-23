@@ -1,26 +1,24 @@
-import datetime
-import json
 import os
-import uuid
 from flask import Flask, request, jsonify
 from google.cloud import storage
 import google.cloud.dlp
-import proto
 
 app = Flask(__name__)
 
-
 dlp_client = google.cloud.dlp_v2.DlpServiceClient()
-storage_client = storage.Client()
 
 
 @app.route("/", methods=["POST"])
 def post_handler():
     req = request.get_json()
-    input_file = req["input_file"]
-    input_file_bucket = req["input_file_bucket"]
+    text_data = req["text_data"]
     dlp_template = req["dlp_template"]
     project_id = req["project_id"]
+
+    print("Type of text_data: ", type(text_data))
+    print("Received text data: ", text_data)
+
+    return
 
     try:
         findings = run_dlp_on_text(
