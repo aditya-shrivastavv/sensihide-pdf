@@ -1,4 +1,5 @@
 import json
+import proto
 from flask import Flask, request, jsonify
 import google.cloud.dlp
 
@@ -38,7 +39,4 @@ def run_dlp_on_text(text_data, dlp_template, project_id):
         }
     )
 
-    result_dict = dlp_response.result.to_dict()
-    json_result = json.dumps(result_dict)
-
-    return json_result
+    return proto.Message.to_dict(dlp_response.result)
