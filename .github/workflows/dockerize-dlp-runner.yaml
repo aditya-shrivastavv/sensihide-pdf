@@ -6,6 +6,7 @@ on:
                 description: 'Image tag'
                 required: true
                 default: 'latest'
+                type: string
     push:
         branches:
             - master
@@ -29,5 +30,5 @@ jobs:
                 uses: docker/build-push-action@v6
                 with:
                     context: ./src/dlp-runner
-                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/sensihidepdf-dlp-runner:${{ github.event.inputs.image-tag }}
+                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/sensihidepdf-dlp-runner:${{ github.event.inputs.image-tag || 'latest' }}
                     push: true
