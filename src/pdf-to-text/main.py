@@ -15,7 +15,6 @@ def post_handler():
 
     input_file = req["input_file"]
     input_file_bucket = req["input_file_bucket"]
-    buffer_bucket = req["buffer_bucket"]
 
     text_data = ""
     try:
@@ -23,22 +22,7 @@ def post_handler():
     except Exception as e:
         return {"error": f"Error extracting text from PDF: {str(e)}"}, 500
 
-    text_filepath = ""
-    try:
-        text_filepath = save_text_to_bucket(text_data, buffer_bucket)
-    except Exception as e:
-        return {"error": f"Error saving text to bucket: {str(e)}"}, 500
-
-    return {
-        "status": 200,
-        "message": "Text extracted and saved successfully",
-        "data": text_filepath
-    }
-
-
-def remove_temp_files(*files):
-    for file in files:
-        os.remove(file)
+    return text_data
 
 
 def extract_text_from_pdf(input_file_bucket, input_file):
@@ -58,30 +42,9 @@ def extract_text_from_pdf(input_file_bucket, input_file):
         pdf_text += pdf_document[page_num].get_text()
 
     # Clean up the temporary files
-    remove_temp_files(download_input_filename)
+    os.remove(download_input_filename)
 
     return pdf_text
-
-
-def save_text_to_bucket(text_data, buffer_bucket):
-    # Save `pdf_text` to a temporary file
-    text_filepath = f"/tmp/{str(uuid.uuid4())}.txt"
-    with open(text_filepath, "w") as text_file:
-        text_file.write(text_data)
-
-    print(f"Extracted text saved to: {text_filepath}")
-
-    # Upload the temporary file to the buffer bucket
-    buffer_bucket_client = storage_client.get_bucket(buffer_bucket)
-    blob = buffer_bucket_client.blob(text_filepath)
-    blob.upload_from_filename(text_filepath)
-
-    print(f"Text file uploaded to: gs://{buffer_bucket}/{text_filepath}")
-
-    # Clean up the temporary files
-    remove_temp_files(text_filepath)
-
-    return text_filepath
 
 
 if __name__ == "__main__":
