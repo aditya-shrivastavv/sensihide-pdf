@@ -12,7 +12,7 @@ resource "google_project_iam_member" "pdf_to_text_storage_user" {
 resource "google_cloud_run_v2_service" "pdf_to_text" {
   name     = "pdf-to-text${local.app_suffix}"
   location = var.region
-  ingress = "INGRESS_TRAFFIC_INTERNAL_ONLY"
+  ingress  = "INGRESS_TRAFFIC_INTERNAL_ONLY"
 
   template {
     containers {

@@ -20,7 +20,7 @@ resource "google_data_loss_prevention_inspect_template" "dlp_text_template" {
       name = "LAST_NAME"
     }
     min_likelihood = "POSSIBLE"
-    include_quote = true
+    include_quote  = true
   }
 
   depends_on = [module.project_services]

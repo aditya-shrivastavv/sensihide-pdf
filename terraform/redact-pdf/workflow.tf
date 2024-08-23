@@ -29,11 +29,11 @@ resource "google_workflows_workflow" "redact_pdf" {
   source_contents = templateFile(
     "${path.module}/templates/workflow.yaml",
     {
-      buffer_bucket = google_storage_bucket.buffer_bucket.name
-      output_bucket = google_storage_bucket.output_bucket.name
-      pdf_to_text_url = google_cloud_run_v2_service.pdf_to_text.uri
-      dlp_runner_url = google_cloud_run_v2_service.dlp_runner.uri
-      dlp_template = google_data_loss_prevention_inspect_template.dlp_text_template.id
+      buffer_bucket       = google_storage_bucket.buffer_bucket.name
+      output_bucket       = google_storage_bucket.output_bucket.name
+      pdf_to_text_url     = google_cloud_run_v2_service.pdf_to_text.uri
+      dlp_runner_url      = google_cloud_run_v2_service.dlp_runner.uri
+      dlp_template        = google_data_loss_prevention_inspect_template.dlp_text_template.id
       findings_writer_url = google_cloud_run_v2_service.findings_writer.uri
     }
   )

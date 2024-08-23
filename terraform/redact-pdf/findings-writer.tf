@@ -12,7 +12,7 @@ resource "google_project_iam_member" "findings_writer_bq_writer" {
 resource "google_cloud_run_v2_service" "findings_writer" {
   name     = "findings-writer${local.app_suffix}"
   location = var.region
-  ingress = "INGRESS_TRAFFIC_INTERNAL_ONLY"
+  ingress  = "INGRESS_TRAFFIC_INTERNAL_ONLY"
 
   template {
     containers {

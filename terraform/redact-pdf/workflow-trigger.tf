@@ -23,7 +23,7 @@ data "google_storage_project_service_account" "gcs_account" {
 }
 
 locals {
-    pubsub_default_sa_email = "service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
+  pubsub_default_sa_email = "service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }
 
 resource "google_project_iam_member" "gcs_sa_to_pubsub" {
