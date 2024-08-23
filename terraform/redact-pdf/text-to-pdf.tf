@@ -16,7 +16,7 @@ resource "google_cloud_run_v2_service" "pdf_to_text" {
 
   template {
     containers {
-      image = "Image"
+      image = var.image_pdf_to_text
     }
     service_account = google_service_account.pdf_to_text.email
   }

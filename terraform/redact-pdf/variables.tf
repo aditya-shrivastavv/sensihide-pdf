@@ -15,3 +15,9 @@ variable "suffix" {
     error_message = "Suffix must be between 3 and 6 characters"
   }
 }
+
+variable "image_pdf_to_text" {
+  default = "adityadocs/sensihidepdf-pdf-to-text:latest"
+  description = "Image for the PDF to text service"
+  type        = string
+}
