@@ -55,5 +55,7 @@ main:
                     project_id: $${config.project_id}
                     finding_labels: $${config.finding_labels}
                 result: dlp_result
-        - 4. Apply redaction to PDF:
+        - 4. Write DLP result to BigQuery:
             call: http.post
+            args:
+                url: "${findings_writer_url}"
