@@ -36,4 +36,5 @@ def run_dlp_on_text(text_data, dlp_template, project_id):
             }
         }
     )
-    return jsonify(dlp_response.result)
+    print("DLP API response received: ", dlp_response.result)
+    return dlp_response.result
