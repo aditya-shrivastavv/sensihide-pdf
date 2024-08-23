@@ -33,3 +33,8 @@ variable "image_findings_writer" {
   description = "Image for the findings writer service"
   type        = string
 }
+
+variable "credentials_json" {
+  description = "Path to the credentials JSON file"
+  type        = string
+}

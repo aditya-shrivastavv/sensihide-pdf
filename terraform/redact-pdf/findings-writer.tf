@@ -19,7 +19,7 @@ resource "google_cloud_run_v2_service" "findings_writer" {
       image = var.image_findings_writer
       env {
         name  = "BQ_DATASET"
-        value = google_bigquery_dataset.pdf_redaction.dataset_id
+        value = google_bigquery_dataset.redact_pdf.dataset_id
       }
       env {
         name  = "BQ_TABLE"

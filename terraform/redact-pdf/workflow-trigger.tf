@@ -49,10 +49,10 @@ resource "google_eventarc_trigger" "primary" {
   }
   matching_criteria {
     attribute = "bucket"
-    value     = google_storage_bucket.pdf_input_bucket.name
+    value     = google_storage_bucket.input_bucket.name
   }
   destination {
-    workflow = google_workflows_workflow.pdf_redactor.name
+    workflow = google_workflows_workflow.redact_pdf.name
   }
 
   depends_on = [

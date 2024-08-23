@@ -5,6 +5,7 @@ module "project_services" {
   project_id = var.project_id
 
   activate_apis = [
+    "iam.googleapis.com",
     "run.googleapis.com",
     "bigquery.googleapis.com",
     "dlp.googleapis.com",
@@ -12,6 +13,7 @@ module "project_services" {
     "eventarc.googleapis.com",
     "pubsub.googleapis.com",
   ]
+  disable_dependent_services = true
 
   disable_services_on_destroy = false
 }

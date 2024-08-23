@@ -41,7 +41,7 @@ main:
                     input_file: $${config.input_file}
                     input_file_bucket: $${config.input_bucket}
                     buffer_bucket: $${config.buffer_bucket}
-                result: text_filename
+            result: text_filename
         - 3. Run DLP on extracted text:
             call: http.post
             args:
@@ -54,7 +54,7 @@ main:
                     dlp_template: $${config.dlp_template}
                     project_id: $${config.project_id}
                     finding_labels: $${config.finding_labels}
-                result: dlp_result
+            result: dlp_result
         - 4. Write DLP result to BigQuery:
             call: http.post
             args:

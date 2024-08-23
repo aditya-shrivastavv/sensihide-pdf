@@ -26,7 +26,7 @@ resource "google_workflows_workflow" "redact_pdf" {
   region          = var.region
   description     = "Workflow that redacts sensitive information from a single PDF file"
   service_account = google_service_account.workflow.id
-  source_contents = templateFile(
+  source_contents = templatefile(
     "${path.module}/templates/workflow.yaml",
     {
       buffer_bucket       = google_storage_bucket.buffer_bucket.name

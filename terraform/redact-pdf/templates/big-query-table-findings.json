@@ -1,20 +1,20 @@
 [
   {
     "name": "quote",
-    "type": "STRING"
-    "mode": "NULLABLE",
+    "type": "STRING",
+    "mode": "NULLABLE"
   },
   {
     "mode": "NULLABLE",
     "name": "info_type",
-    "type": "RECORD"
+    "type": "RECORD",
     "fields": [
       {
         "mode": "NULLABLE",
         "name": "name",
         "type": "STRING"
       }
-    ],
+    ]
   },
   {
     "mode": "NULLABLE",
