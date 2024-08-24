@@ -46,6 +46,7 @@ def get_quotes(findings_data):
     quotes = []
     for finding in findings_data["findings"]:
         quotes.append(finding["quote"])
+    return quotes
 
 
 def download_input_file(input_file, input_file_bucket):
