@@ -16,7 +16,6 @@ main:
                 - Configure-workflow:
                     assign:
                         - config:
-                            buffer_bucket: "${buffer_bucket}"
                             output_bucket: "${output_bucket}"
                             input_bucket: $${event.data.bucket}
                             input_file: $${event.data.name}
