@@ -52,7 +52,18 @@ main:
                     dlp_template: $${config.dlp_template}
                     project_id: $${config.project_id}
             result: dlp_result
-        - 4. Write DLP result to BigQuery:
+        - 4. Apply redaction to PDF:
+            call: http.post
+            args:
+                url: "${redact_pdf_url}"
+            auth:
+                type: OIDC
+            body:
+                input_file: $${config.input_file}
+                input_file_bucket: $${config.input_bucket}
+                findings: $${dlp_result.body}
+                output_bucket: $${config.output_bucket}
+        - 5. Write DLP result to BigQuery:
             call: http.post
             args:
                 url: "${findings_writer_url}"
