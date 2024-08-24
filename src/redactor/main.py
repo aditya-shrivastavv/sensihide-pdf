@@ -16,6 +16,7 @@ def post_handler():
     findings = req["findings"]
     output_bucket = req["output_bucket"]
 
+    print("findings: ", findings)
     sensitive_text = get_quotes(findings)
     output_file = f"{input_file}_redacted.pdf"
 
