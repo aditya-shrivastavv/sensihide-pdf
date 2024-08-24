@@ -57,22 +57,25 @@ class SensihidePDF:
             for phone_number_item in sensitive_info["phone_numbers"]:
                 areas = page.search_for(phone_number_item)
                 for area in areas:
-                    page.add_redact_annot(area, fill=(0, 0, 0))
+                    page.add_redact_annot(
+                        area, text="PHONE_NUMBER", fill=(0.8, 0.8, 0.8), fontsize=100)
                     page.apply_redactions()
 
             for email_item in sensitive_info["emails"]:
                 areas = page.search_for(email_item)
                 for area in areas:
-                    page.add_redact_annot(area, fill=(0, 0, 0))
+                    page.add_redact_annot(area, text="EMAIL_ADDRESS", fill=(
+                        0.8, 0.8, 0.8), fontsize=100)
                     page.apply_redactions()
 
         self.pdf_document.save(output_path)
 
 
-all_pdfs = os.listdir("./input")
+input_dir = "./input"
+all_pdfs = os.listdir(input_dir)
 
 for pdf in all_pdfs:
-    fileObj = SensihidePDF(pdf)
+    fileObj = SensihidePDF(os.path.join(input_dir, pdf))
     pdf_text = fileObj.extract_text_from_pdf()
     containes_sensitive_data, sensitive_info = fileObj.find_sensitive_info(
         pdf_text)
