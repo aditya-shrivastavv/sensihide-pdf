@@ -10,15 +10,6 @@ resource "google_data_loss_prevention_inspect_template" "dlp_text_template" {
     info_types {
       name = "EMAIL_ADDRESS"
     }
-    info_types {
-      name = "PERSON_NAME"
-    }
-    info_types {
-      name = "FIRST_NAME"
-    }
-    info_types {
-      name = "LAST_NAME"
-    }
     min_likelihood = "POSSIBLE"
     include_quote  = true
   }
