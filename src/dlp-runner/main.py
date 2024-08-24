@@ -39,4 +39,4 @@ def run_dlp_on_text(text_data, dlp_template, project_id):
         }
     )
 
-    return proto.Message.to_dict(dlp_response.result)
+    return proto.Message.to_json(dlp_response.result)
