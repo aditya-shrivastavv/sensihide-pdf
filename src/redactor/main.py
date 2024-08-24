@@ -16,10 +16,10 @@ def post_handler():
     input_file_bucket = req["input_file_bucket"]
     findings_data = req["findings"]
     output_bucket = req["output_bucket"]
-
     if not findings_data:
         return jsonify({"error": "No findings data provided"}), 400
 
+    print("Findings data type: ", type(findings_data))
     findings = json.loads(findings_data)
     sensitive_text = get_quotes(findings)
     output_file = f"{input_file}_redacted.pdf"
