@@ -1,5 +1,6 @@
 import fitz
 import os
+import json
 from flask import Flask, request, jsonify
 from google.cloud import storage
 
@@ -16,7 +17,8 @@ def post_handler():
     findings = req["findings"]
     output_bucket = req["output_bucket"]
 
-    print("findings: ", findings)
+    findings = json.loads(findings)
+    print("Findings: ", findings)
     sensitive_text = get_quotes(findings)
     output_file = f"{input_file}_redacted.pdf"
 
