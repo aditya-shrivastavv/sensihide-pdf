@@ -34,6 +34,12 @@ variable "image_findings_writer" {
   type        = string
 }
 
+variable "image_pdf_redactor" {
+  default     = "adityadocs/sensihidepdf-redactor"
+  description = "Image for the PDF redactor service"
+  type        = string
+}
+
 variable "credentials_json" {
   description = "Path to the credentials JSON file"
   type        = string
