@@ -45,7 +45,7 @@ def post_handler():
 def get_quotes(findings_data):
     quotes = []
     for finding in findings_data["findings"]:
-        quotes.append(finding["quote"])
+        quotes.append((finding["quote"], finding["infoType"]["name"]))
     return quotes
 
 
@@ -59,10 +59,11 @@ def apply_redactions(input_file, sensitive_text, output_file):
     pdf_document = fitz.open(input_file)
     for page_num in range(len(pdf_document)):
         page = pdf_document[page_num]
-        for quote in sensitive_text:
+        for quote, quoteType in sensitive_text:
             areas = page.search_for(quote)
             for area in areas:
-                page.add_redact_annot(area, fill=(0, 0, 0))
+                page.add_redact_annot(area, text=f"[{quoteType}]", fill=(
+                    0.8, 0.8, 0.8), fontsize=100)
                 page.apply_redactions()
 
     pdf_document.save(output_file)
