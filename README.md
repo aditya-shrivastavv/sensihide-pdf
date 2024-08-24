@@ -22,10 +22,12 @@ The entire application can be provisioned using **Terraform**, making it easy to
 
 ### Services 🛠️
 
-- PDF To Text:     [Code](./src/pdf-to-text/) | [Terraform](./terraform/redact-pdf/pdf-to-text.tf)
-- DLP Runner:      [Code](./src/dlp-runner/) | [Terraform](./terraform/redact-pdf/dlp-runner.tf)
-- Redactor:        [Code](./src/redactor/) | [Terraform](./terraform/redact-pdf/redact-pdf.tf)
-- Findings Writer: [Code](./src/findings-to-bigquery/) | [Terraform](./terraform/redact-pdf/findings-writer.tf)
+| Service Name | Code | Terraform |
+| --- | --- | --- |
+| PDF To Text | [Code](./src/pdf-to-text/) | [Terraform](./terraform/redact-pdf/pdf-to-text.tf) |
+| DLP Runner | [Code](./src/dlp-runner/) | [Terraform](./terraform/redact-pdf/dlp-runner.tf) |
+| Redactor | [Code](./src/redactor/) | [Terraform](./terraform/redact-pdf/redact-pdf.tf) |
+| Findings Writer | [Code](./src/findings-to-bigquery/) | [Terraform](./terraform/redact-pdf/findings-writer.tf) |
 
 Leave a ⭐ if you like this project!
 
