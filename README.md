@@ -22,7 +22,7 @@ The entire application can be provisioned using **Terraform**, making it easy to
 
 ### Services 🛠️
 
-| Service Name | Code | Terraform |
+| Service Name | Source Code | Infrastructure |
 | --- | --- | --- |
 | PDF To Text | [Code](./src/pdf-to-text/) | [Terraform](./terraform/redact-pdf/pdf-to-text.tf) |
 | DLP Runner | [Code](./src/dlp-runner/) | [Terraform](./terraform/redact-pdf/dlp-runner.tf) |
