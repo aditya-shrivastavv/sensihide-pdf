@@ -14,10 +14,12 @@ def post_handler():
     req = request.get_json()
     input_file = req["input_file"]
     input_file_bucket = req["input_file_bucket"]
-    findings = req["findings"]
+    findings_data = req["findings"]
     output_bucket = req["output_bucket"]
 
-    findings = json.loads(findings)
+    print("Findings type (original): ", type(findings_data))
+    findings = json.loads(findings_data)
+    print("Findings type: ", type(findings))
     print("Findings: ", findings)
     sensitive_text = get_quotes(findings)
     output_file = f"{input_file}_redacted.pdf"
@@ -40,9 +42,9 @@ def post_handler():
         return jsonify({"error": "Error applying redactions"}), 500
 
 
-def get_quotes(findings):
+def get_quotes(findings_data):
     quotes = []
-    for finding in findings:
+    for finding in findings_data.findings:
         quotes.append(finding["quote"])
 
 
