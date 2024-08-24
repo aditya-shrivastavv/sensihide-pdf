@@ -34,7 +34,7 @@ resource "google_workflows_workflow" "redact_pdf" {
       dlp_runner_url      = google_cloud_run_v2_service.dlp_runner.uri
       dlp_template        = google_data_loss_prevention_inspect_template.dlp_text_template.id
       findings_writer_url = google_cloud_run_v2_service.findings_writer.uri
-      redact_pdf_url = google_cloud_run_v2_service.pdf_redactor.uri
+      redact_pdf_url      = google_cloud_run_v2_service.pdf_redactor.uri
     }
   )
 
