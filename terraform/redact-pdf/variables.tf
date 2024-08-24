@@ -23,19 +23,19 @@ variable "image_pdf_to_text" {
 }
 
 variable "image_dlp_runner" {
-  default     = "adityadocs/sensihidepdf-dlp-runner"
+  default     = "adityadocs/sensihidepdf-dlp-runner:latest"
   description = "Image for the DLP runner service"
   type        = string
 }
 
 variable "image_findings_writer" {
-  default     = "adityadocs/sensihidepdf-findings-writer"
+  default     = "adityadocs/sensihidepdf-findings-writer:latest"
   description = "Image for the findings writer service"
   type        = string
 }
 
 variable "image_pdf_redactor" {
-  default     = "adityadocs/sensihidepdf-redactor"
+  default     = "adityadocs/sensihidepdf-redactor:latest"
   description = "Image for the PDF redactor service"
   type        = string
 }
