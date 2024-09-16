@@ -1,6 +1,12 @@
 name: Build and Push (Findings writer)
 on:
     workflow_dispatch:
+        inputs:
+            image-tag:
+                description: 'Image tag'
+                required: true
+                default: 'latest'
+                type: string
     push:
         branches:
             - master
@@ -24,5 +30,5 @@ jobs:
                 uses: docker/build-push-action@v6
                 with:
                     context: ./src/findings-to-bigquery
-                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/sensihidepdf-findings-writer:latest
+                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/sensihidepdf-findings-writer:${{ github.event.inputs.image-tag || 'latest' }}
                     push: true
