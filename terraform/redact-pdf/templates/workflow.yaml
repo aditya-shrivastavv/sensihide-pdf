@@ -70,4 +70,3 @@ main:
                     type: OIDC
                 body:
                     findings: $${dlp_result.body}
-                    project_id: $${config.project_id}
