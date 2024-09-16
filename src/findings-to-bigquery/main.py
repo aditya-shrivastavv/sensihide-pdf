@@ -21,9 +21,28 @@ bq_client = bigquery.Client()
 @app.route("/", methods=["POST"])
 def post_handler():
     req = request.get_json()
-    print(req)
-
     findings = req["findings"]
-    print("findings: ", findings)
+    project_id = req["project_id"]
 
-    return jsonify({"status": "ok"})
+    try:
+        result = write_to_bigquery(findings, project_id)
+        return jsonify(result)
+    except Exception as e:
+        print(f"error: {e}")
+        return ("", 500)
+
+
+def write_to_bigquery(findings, project_id):
+    full_table_name = f"{project_id}.{BQ_DATASET}.{BQ_TABLE}"
+    bq_result = bq_client.insert_rows_json(
+        table=full_table_name, json_rows=findings, ignore_unknown_values=True)
+
+    # Check if write was successful
+    if len(bq_result) == 0:
+        print(f"Findings inserted in BQ table: {full_table_name}")
+    else:
+        print(f"BQ insert errors: {bq_result}")
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
