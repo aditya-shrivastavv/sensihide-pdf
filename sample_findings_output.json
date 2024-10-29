@@ -1,0 +1,63 @@
+{
+    "findings": [
+        {
+            "quote": "email@gmail.com",
+            "infoType": {
+                "name": "EMAIL_ADDRESS",
+                "sensitivityScore": {
+                    "score": 20
+                },
+                "version": ""
+            },
+            "likelihood": "4",
+            "location": {
+                "byteRange": {
+                    "start": "19",
+                    "end": "44"
+                },
+                "codepointRange": {
+                    "start": "19",
+                    "end": "44"
+                },
+                "contentLocations": []
+            },
+            "createTime": "2021-07-07T07:00:00Z",
+            "findingId": "2024-10-29T01:17:03.752394Z7508126286426074422",
+            "name": "",
+            "resourceName": "",
+            "triggerName": "",
+            "labels": {},
+            "jobName": ""
+        },
+        {
+            "quote": "+91 9999999999",
+            "infoType": {
+                "name": "PHONE_NUMBER",
+                "sensitivityScore": {
+                    "score": 20
+                },
+                "version": ""
+            },
+            "likelihood": "3",
+            "location": {
+                "byteRange": {
+                    "start": "19",
+                    "end": "44"
+                },
+                "codepointRange": {
+                    "start": "19",
+                    "end": "44"
+                },
+                "contentLocations": []
+            },
+            "createTime": "2021-07-07T07:00:00Z",
+            "findingId": "2024-10-29T01:17:03.752394Z7508126286426074422",
+            "name": "",
+            "resourceName": "",
+            "triggerName": "",
+            "labels": {},
+            "jobName": ""
+        }
+    ],
+    "findingsTruncated": false
+}
