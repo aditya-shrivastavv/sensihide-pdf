@@ -23,6 +23,8 @@ def post_handler():
     req = request.get_json()
     findings = req["findings"]
     project_id = req["project_id"]
+    print("findings type: ", type(findings))
+    print("findings: ", findings)
 
     try:
         result = write_to_bigquery(findings, project_id)
