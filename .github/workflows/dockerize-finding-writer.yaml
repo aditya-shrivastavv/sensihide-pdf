@@ -7,11 +7,6 @@ on:
                 required: true
                 default: 'latest'
                 type: string
-    push:
-        branches:
-            - master
-        paths:
-            - "src/findings-to-bigquery/**"
 jobs:
     build-push:
         runs-on: ubuntu-latest
