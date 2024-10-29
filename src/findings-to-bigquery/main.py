@@ -38,7 +38,7 @@ def post_handler():
 def write_to_bigquery(findings, project_id):
     full_table_name = f"{project_id}.{BQ_DATASET}.{BQ_TABLE}"
     bq_result = bq_client.insert_rows_json(
-        table=full_table_name, json_rows=[findings], ignore_unknown_values=True)
+        table=full_table_name, json_rows=[findings[findings]], ignore_unknown_values=True)
 
     # Check if write was successful
     if len(bq_result) == 0:
