@@ -1,4 +1,5 @@
 import os
+import json
 
 from flask import Flask, request, jsonify
 from google.cloud import storage
@@ -27,7 +28,7 @@ def post_handler():
     print("findings: ", findings)
 
     try:
-        result = write_to_bigquery(findings, project_id)
+        result = write_to_bigquery(json.loads(findings), project_id)
         return jsonify(result)
     except Exception as e:
         print(f"error: {e}")
